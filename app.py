@@ -33,15 +33,15 @@ def add_contact():
         return redirect(url_for('Index'))
 
 
-@app.route('/edit/<id>')
+@app.route('/edit/<string:id>')
 def get_contact(id):
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM contacts WHERE ID = %s', (id))
+    cur.execute('SELECT * FROM contacts WHERE id = {0}'.format(id))
     data = cur.fetchall()
     return render_template('edit-contact.html', contact = data[0])
 
 
-@app.route('/update/<id>', methods=['POST'])
+@app.route('/update/<string:id>', methods=['POST'])
 def update_contact(id):
     if request.method == 'POST':
         fullname = request.form['fullname']
